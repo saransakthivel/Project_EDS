@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+xmltodict
+sqlalchemy
+pydantic
+pyodbc
+requests
