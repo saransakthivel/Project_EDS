@@ -1,5 +1,5 @@
 # models.py
-from sqlalchemy import Column, Integer, Float, String, Date, Time
+from sqlalchemy import Column, Integer, Float, String, Date, Time, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -9,5 +9,4 @@ class EDSdata(Base):
 
     d_name = Column(String, primary_key=True)
     d_value = Column(Float)
-    date = Column(Date)
-    time = Column(Time)
+    date_time = Column(DateTime)

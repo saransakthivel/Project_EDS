@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from model import EDSdata
 import pytz
 import time
+from datetime import datetime
 
 DATABASE_URL = "mssql+pyodbc://sa:RPSsql12345@localhost:1433/CASeds?driver=ODBC+Driver+17+for+SQL+Server"
 
@@ -16,7 +17,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 xml_url = "http://192.168.29.247/services/user/values.xml?var=Second%20Floor.API"
-fetch_interval = 0.5  # seconds
+fetch_interval = 1  # seconds
 
 def get_db():
     db = SessionLocal()
@@ -45,12 +46,11 @@ def fetchAndStore_XmlData():
                     d_value = float(d_value_element.text)
 
                     now_ist = datetime.now(pytz.timezone("Asia/Kolkata"))
-                    date_str = now_ist.date()
-                    time_str = now_ist.time()
+                    dateTime_str = now_ist.strftime("%Y-%m-%d %H:%M:%S")
 
-                    eds_data = EDSdata(d_name=d_name, d_value=d_value, date=date_str, time=time_str)
+                    eds_data = EDSdata(d_name=d_name, d_value=d_value, date_time=dateTime_str)
 
-                    print(f"Fetched Data - ID: {d_name}, Value: {d_value}, Date: {date_str}, Time: {time_str}")
+                    print(f"Fetched Data - ID: {d_name}, Value: {d_value}, DateTime:{dateTime_str}")
 
                     db.add(eds_data)
                     db.commit()
