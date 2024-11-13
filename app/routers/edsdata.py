@@ -22,7 +22,7 @@ def read_edsData(skip: int=0, limit: int=10, db:Session = Depends(get_db)):
 
 @router.get("/fxml/")
 def fetch_and_storeXml(db: Session = Depends(get_db)):
-    result =  crud.fetch_xml_data_toSql(db=db)
-    if "error" in result:
-        raise HTTPException(status_code=500, detail=result["error"])
+    result = crud.fetch_xml_data_toSql(db=db)
+    if hasattr(result, 'error') and result.error:
+        raise HTTPException(status_code=500, detail=result.error)
     return result

@@ -22,18 +22,22 @@ def fetch_xml_data_toSql(db: session):
 
         root = ET.fromstring(response.content)
 
-        d_name_element = root.find("id")
-        d_value_element = root.find("value")
+        variable_element = root.find(".//variable")
 
-        if d_name_element is None or d_value_element is None:
-            return {"error": "Required Elements Not Found"}
+        if variable_element is not None:
+            d_name_element = variable_element.find("id")
+            d_value_element = variable_element.find("value")
+
+            if d_name_element is not None and d_value_element is not None:
+                d_name = d_name_element.text
+                d_value = float(d_value_element.text)
+
+                eds_data = schemas.InsEdsDataModel(d_name=d_name,d_value=d_value)
+                return ins_d_data(db=db, eds_data=eds_data)
+            else:
+               return {"error" : "Required tags 'id' or 'value' not found in <variable>"}
         else:
-            d_name = d_name_element.text
-            d_value = float(d_value_element.text)
-
-            eds_data = schemas.InsEdsDataModel(d_name=d_name,d_value=d_value)
-
-        return ins_d_data(db, eds_data)
+            return {"error" : "No <variable> element found in XML"}
     else:
-        return {"error" : "failed to fetch xml data", "status_code" : response.status_code}
+         return {"error" : "failed to fetch xml data", "status_code" : response.status_code}
 
