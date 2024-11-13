@@ -14,7 +14,9 @@ def get_d_data(db: session, skip: int=0, limit: int=10):
     return db.query(models.ValuesData).order_by(models.ValuesData.id).offset(skip).limit(limit).all()
 
 def fetch_xml_data_toSql(db: session):
-    xml_url = "http://103.196.31.6/services/user/values.xml?var=F-01%20EB%20Incomer.AE"
+    #xml_url = "http://103.196.31.6/services/user/values.xml?var=F-01%20EB%20Incomer.AE"
+    #xml_url = "http://192.168.29.247/services/user/values.xml?var=Ground%20Floor.AE"
+    xml_url = "http://192.168.29.247/services/user/values.xml?var=Ground%20Floor.API"
 
     response =  requests.get(xml_url)
 
