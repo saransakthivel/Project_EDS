@@ -47,8 +47,10 @@ def fetchAndStore_XmlData():
 
                     now_ist = datetime.now(pytz.timezone("Asia/Kolkata"))
                     dateTime_str = now_ist.strftime("%Y-%m-%d %H:%M:%S")
+                    date_str = now_ist.date()
+                    time_str = now_ist.time().strftime("%H:%M:%S")
 
-                    eds_data = EDSdata(d_name=d_name, d_value=d_value, date_time=dateTime_str)
+                    eds_data = EDSdata(d_name=d_name, d_value=d_value, date_time=dateTime_str, date = date_str, time = time_str)
 
                     print(f"Fetched Data - ID: {d_name}, Value: {d_value}, DateTime:{dateTime_str}")
 

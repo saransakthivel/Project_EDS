@@ -10,3 +10,5 @@ class EDSdata(Base):
     d_name = Column(String, primary_key=True)
     d_value = Column(Float)
     date_time = Column(DateTime)
+    date = Column(Date)
+    time = Column(Time)
