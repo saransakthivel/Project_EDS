@@ -1,0 +1,3 @@
+http://192.168.29.247/services/user/values.xml?var=Second%20Floor.API
+http://192.168.29.247/services/user/values.xml?var=Common%20Area.API
+http://192.168.29.247/services/user/values.xml?var=First%20Floor.API
