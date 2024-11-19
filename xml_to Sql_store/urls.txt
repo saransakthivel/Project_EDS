@@ -1,3 +1,2 @@
-http://192.168.29.247/services/user/values.xml?var=Second%20Floor.API
-http://192.168.29.247/services/user/values.xml?var=Common%20Area.API
-http://192.168.29.247/services/user/values.xml?var=First%20Floor.API
+http://103.196.31.6/services/user/values.xml?var=F-01%20EB%20Incomer.API&var=F-01%20EB%20Incomer.AE&var=F-01%20EB%20Incomer.VAI&var=F-01%20EB%20Incomer.PFI
+http://103.196.31.6/services/user/values.xml?var=F-01%20EB%20Incomer.VI1
