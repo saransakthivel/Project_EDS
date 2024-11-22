@@ -1,0 +1,16 @@
+http://103.196.31.6/services/user/values.xml?var=F-01%20EB%20Incomer.API&var=F-01%20EB%20Incomer.AE&var=F-01%20EB%20Incomer.VAI&var=F-01%20EB%20Incomer.PFI
+http://103.196.31.6/services/user/values.xml?var=DG%20Incomer-1.API&var=DG%20Incomer-1.AE&var=DG%20Incomer-1.VAI&var=DG%20Incomer-1.PFI
+http://103.196.31.6/services/user/values.xml?var=DG%20Incomer-2.API&var=DG%20Incomer-2.AE&var=DG%20Incomer-2.VAI&var=DG%20Incomer-2.PFI
+http://103.196.31.6/services/user/values.xml?var=F-02%20LT%20Power%20House.API&var=F-02%20LT%20Power%20House.AE&var=F-02%20LT%20Power%20House.VAI&var=F-02%20LT%20Power%20House.PFI
+http://103.196.31.6/services/user/values.xml?var=F-03%20C%20Block%20SSB-2.API&var=F-03%20C%20Block%20SSB-2.AE&var=F-03%20C%20Block%20SSB-2.VAI&var=F-03%20C%20Block%20SSB-2.PFI
+http://103.196.31.6/services/user/values.xml?var=F-05%20G%20Block%20SSB-3.API&var=F-05%20G%20Block%20SSB-3.AE&var=F-05%20G%20Block%20SSB-3.VAI&var=F-05%20G%20Block%20SSB-3.PFI
+http://103.196.31.6/services/user/values.xml?var=F-06%20Lighting.API&var=F-06%20Lighting.AE&var=F-06%20Lighting.VAI&var=F-06%20Lighting.PFI
+http://103.196.31.6/services/user/values.xml?var=F-07%20A%20and%20B%20Block.API&var=F-07%20A%20and%20B%20Block.AE&var=F-07%20A%20and%20B%20Block.VAI&var=F-07%20A%20and%20B%20Block.PFI
+http://103.196.31.6/services/user/values.xml?var=F-08%20SSB-6.API&var=F-08%20SSB-6.AE&var=F-08%20SSB-6.VAI&var=F-08%20SSB-6.PFI
+http://103.196.31.6/services/user/values.xml?var=F-09%20Sewage%20Plant.API&var=F-09%20Sewage%20Plant.AE&var=F-09%20Sewage%20Plant.VAI&var=F-09%20Sewage%20Plant.PFI
+http://103.196.31.6/services/user/values.xml?var=F-10%20All%20Hostels.API&var=F-10%20All%20Hostels.AE&var=F-10%20All%20Hostels.VAI&var=F-10%20All%20Hostels.PFI
+http://103.196.31.6/services/user/values.xml?var=F-11%20Mess%20SSB-4.API&var=F-11%20Mess%20SSB-4.AE&var=F-11%20Mess%20SSB-4.VAI&var=F-11%20Mess%20SSB-4.PFI
+http://103.196.31.6/services/user/values.xml?var=F-12%20Outdoor%20Auditorium%20SSB-9.API&var=F-12%20Outdoor%20Auditorium%20SSB-9.AE&var=F-12%20Outdoor%20Auditorium%20SSB-9.VAI&var=F-12%20Outdoor%20Auditorium%20SSB-9.PFI
+http://103.196.31.6/services/user/values.xml?var=F-13%20GRD%20Auditorium%20SSB-8.API&var=F-13%20GRD%20Auditorium%20SSB-8.AE&var=F-13%20GRD%20Auditorium%20SSB-8.VAI&var=F-13%20GRD%20Auditorium%20SSB-8.PFI
+http://103.196.31.6/services/user/values.xml?var=F-14%20Commerce%20Block.API&var=F-14%20Commerce%20Block.AE&var=F-14%20Commerce%20Block.VAI&var=F-14%20Commerce%20Block.PFI
+http://103.196.31.6/services/user/values.xml?var=Food%20Court%202.API&var=Food%20Court%202.AE&var=Food%20Court%202.VAI&var=Food%20Court%202.PFI
