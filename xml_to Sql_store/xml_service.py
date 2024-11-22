@@ -62,7 +62,14 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
             with open(url_file, "r") as file:
                 urls = [line.strip() for line in file if line.strip()]
                 logging.info(f"Extracted URLs: {urls}")
-            
+
+            now_ist = datetime.now(pytz.timezone("Asia/Kolkata"))
+            dateTime_str = now_ist.strftime("%Y-%m-%d %H:%M:%S")
+            date_str = now_ist.date()
+            time_str = now_ist.time().strftime("%H:%M:%S")
+
+            logging.info(f"Timestamp for this fetch cycle: {dateTime_str}")
+
             for url in urls:
                 try:
                     logging.info(f"Fetching data from {url}")
@@ -75,12 +82,13 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                             d_name = variable_element.find("id").text
                             d_value = float(variable_element.find("value").text)
 
-                            now_ist = datetime.now(pytz.timezone("Asia/Kolkata"))
-                            dateTime_str = now_ist.strftime("%Y-%m-%d %H:%M:%S")
-                            date_str = now_ist.date()
-                            time_str = now_ist.time().strftime("%H:%M:%S")
-
-                            eds_data = EDSdata(d_name=d_name, d_value=d_value, date_time=dateTime_str, date=date_str, time=time_str)
+                            eds_data = EDSdata(
+                                d_name=d_name, 
+                                d_value=d_value, 
+                                date_time=dateTime_str, 
+                                date=date_str, 
+                                time=time_str
+                            )
                             logging.info(f"Fetched Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
 
                             db.add(eds_data)
