@@ -20,9 +20,9 @@ def insert_edsData(edsData: schemas.InsEdsDataModel, db:Session = Depends(get_db
 def read_edsData(skip: int=0, limit: int=10, db:Session = Depends(get_db)):
     return crud.get_d_data(db=db, skip=skip, limit=limit)
 
-@router.get("/fxml/")
-def fetch_and_storeXml(db: Session = Depends(get_db)):
-    result = crud.fetch_xml_data_toSql(db=db)
-    if hasattr(result, 'error') and result.error:
-        raise HTTPException(status_code=500, detail=result.error)
-    return result
+# @router.get("/fxml/")
+# def fetch_and_storeXml(db: Session = Depends(get_db)):
+#     result = crud.fetch_xml_data_toSql(db=db)
+#     if hasattr(result, 'error') and result.error:
+#         raise HTTPException(status_code=500, detail=result.error)
+#     return result

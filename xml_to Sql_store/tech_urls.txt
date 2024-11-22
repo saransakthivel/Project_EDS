@@ -1,0 +1,20 @@
+http://127.0.0.1:8087/services/user/values.xml?var=F-01%20Y%20Block.API&var=F-01%20Y%20Block.AE&var=F-01%20Y%20Block.VAI&var=F-01%20Y%20Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-02 G Block.API&var=F-02 G Block.AE&var=F-02 G Block.VAI&var=F-02 G Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-03 M Block.API&var=F-03 M Block.AE&var=F-03 M Block.VAI&var=F-03 M Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-04 Y Block AC.API&var=F-04 Y Block AC.AE&var=F-04 Y Block AC.VAI&var=F-04 Y Block AC.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-05 Admn Block.API&var=F-05 Admn Block.AE&var=F-05 Admn Block.VAI&var=F-05 Admn Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-06 EB Block.API&var=F-06 EB Block.AE&var=F-06 EB Block.VAI&var=F-06 EB Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-07 L Block.API&var=F-07 L Block.AE&var=F-07 L Block.VAI&var=F-07 L Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-08 E Block Emer RM.API&var=F-08 E Block Emer RM.AE&var=F-08 E Block Emer RM.VAI&var=F-08 E Block Emer RM.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-11 G Block.API&var=F-11 G Block.AE&var=F-11 G Block.VAI&var=F-11 G Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-12 J Block.API&var=F-12 J Block.AE&var=F-12 J Block.VAI&var=F-12 J Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-13 Y Block 200 kVA UPS.API&var=F-13 Y Block 200 kVA UPS.AE&var=F-13 Y Block 200 kVA UPS.VAI&var=F-13 Y Block 200 kVA UPS.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-14 EB Block AC.API&var=F-14 EB Block AC.AE&var=F-14 EB Block AC.VAI&var=F-14 EB Block AC.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-15 EB Block RO Plant.API&var=F-15 EB Block RO Plant.AE&var=F-15 EB Block RO Plant.VAI&var=F-15 EB Block RO Plant.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-16 A Block.API&var=F-16 A Block.AE&var=F-16 A Block.VAI&var=F-16 A Block.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-19 E Block Ord RM.API&var=F-19 E Block Ord RM.AE&var=F-19 E Block Ord RM.VAI&var=F-19 E Block Ord RM.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-20 K Block UPS 200 kVA.API&var=F-20 K Block UPS 200 kVA.AE&var=F-20 K Block UPS 200 kVA.VAI&var=F-20 K Block UPS 200 kVA.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=F-21 To ACO Panel.API&var=F-21 To ACO Panel.AE&var=F-21 To ACO Panel.VAI&var=F-21 To ACO Panel.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=HT EB Incomer.API&var=HT EB Incomer.AE&var=HT EB Incomer.VAI&var=HT EB Incomer.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=Lighting COP.API&var=Lighting COP.AE&var=Lighting COP.VAI&var=Lighting COP.PFI
+http://127.0.0.1:8087/services/user/values.xml?var=LT EB Incomer.API&var=LT EB Incomer.AE&var=LT EB Incomer.VAI&var=LT EB Incomer.PFI
