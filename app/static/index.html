@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Data Viewer</title>
+    </head>
+    <body>
+        <h1>PSG College of Art & Science, Coimbatore - 641014</h1>
+        <h2>Latest Data for Device</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Device Name</th>
+                    <th>Device Value</th>
+                    <th>Date & Time</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+            </tbody>
+        </table>
+
+        <script>
+            function formatDate(dateString) {
+                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+                const date = new Date(dateString);
+                return date.toLocaleString('en-GB', options);  
+            }
+
+            async function fetchData() {
+                try{
+                    const deviceName = "F-01 EB Incomer.API";
+                    const response = await fetch(`/data/?d_name=${deviceName}`);
+                    if(!response.ok){
+                        throw new Error(`HTTP error! status: ${response.status}`)
+                    }
+                    const data = await response.json();
+
+                    const tableBody = document.getElementById("data-table");
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td>${data.id || "N/A"}</td>
+                            <td>${data.d_name || "N/A"}</td>
+                            <td>${data.d_value || "N/A"}</td>
+                            <td>${formatDate(data.date_time) || "N/A"}</td>
+                        </tr>
+                    `;
+                } catch(error){
+                    console.error("Error fetching latest data:",error);
+                   
+                    document.body.insertAdjacentHTML(
+                        "beforeend",
+                        "<p style'color:red;'>Failed to fetch device data. Please try again later.</p>"
+                    );
+                }
+               
+            } 
+            
+            fetchData();
+
+            setInterval(fetchData, 5000) // seconds for Auto-refresh
+        </script>
+    </body>
+</html>
