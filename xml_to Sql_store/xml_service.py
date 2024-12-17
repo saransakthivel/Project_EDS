@@ -14,7 +14,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import xml.etree.ElementTree as ET
 from model import EDSdata
 
-DATABASE_URL = "mssql+pyodbc://sa:RPSsql12345@localhost:1433/CASeds?driver=ODBC+Driver+17+for+SQL+Server"
+DATABASE_URL = "mssql+pyodbc://sa:RPSsql12345@localhost:1433/PSGedsData?driver=ODBC+Driver+17+for+SQL+Server"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()

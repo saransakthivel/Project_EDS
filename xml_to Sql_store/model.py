@@ -7,7 +7,7 @@ import uuid
 Base = declarative_base()
 
 class EDSdata(Base):
-    __tablename__ = 'EDSdata'  # Table name
+    __tablename__ = 'CasData'  # Table name
 
     id = Column(UNIQUEIDENTIFIER, primary_key=True, default=uuid.uuid4)
     d_name = Column(String, primary_key=True)
