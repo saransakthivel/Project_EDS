@@ -10,7 +10,17 @@ class EDSdata(Base):
     __tablename__ = 'CasData'  # Table name
 
     id = Column(UNIQUEIDENTIFIER, primary_key=True, default=uuid.uuid4)
-    d_name = Column(String, primary_key=True)
+    d_name = Column(String)
+    d_value = Column(Float)
+    date_time = Column(DateTime)
+    date = Column(Date)
+    time = Column(Time)
+
+class TechEdsData(Base):
+    __tablename__ = 'TechData'
+
+    id = Column(UNIQUEIDENTIFIER, primary_key=True, default=uuid.uuid4)
+    d_name = Column(String)
     d_value = Column(Float)
     date_time = Column(DateTime)
     date = Column(Date)

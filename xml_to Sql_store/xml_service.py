@@ -12,14 +12,16 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 import xml.etree.ElementTree as ET
-from model import EDSdata
+from model import EDSdata, TechEdsData
 
 DATABASE_URL = "mssql+pyodbc://sa:RPSsql12345@localhost:1433/PSGedsData?driver=ODBC+Driver+17+for+SQL+Server"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-url_file = os.path.join(os.path.dirname(__file__), "urls.txt")
+script_dir=os.path.abspath(os.path.dirname(__file__))
+url_file = os.path.join(script_dir, "urls.txt")
+tech_url_file = os.path.join(script_dir, "tech_urls.txt")
 fetch_interval = 10  # seconds
 
 logging.basicConfig(
@@ -50,6 +52,11 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
         servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, servicemanager.PYS_SERVICE_STARTED, (self._svc_name_, ''))
         try:
             self.scheduler.add_job(self.fetchAndStore_XmlData, 'interval', seconds=fetch_interval, max_instances=1)
+            logging.info("Job scheduled: fetchAndStore_XmlData every %s seconds", fetch_interval)
+            
+            self.scheduler.add_job(self.fetchAndStore_TechXmlData, 'interval', seconds=fetch_interval, max_instances=1)
+            logging.info("Job scheduled: fetchAndStore_TechXmlData every %s seconds", fetch_interval)
+            
             self.scheduler.start()
             logging.info("Scheduler started successfully.")
         except Exception as e:
@@ -63,7 +70,7 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                 urls = [line.strip() for line in file if line.strip()]
                 logging.info(f"Extracted URLs: {urls}")
 
-            now_ist = datetime.now(pytz.timezone("Asia/Kolkata"))
+            now_ist = datetime.now(pytz.timezone("Asia/Kolkata")) 
             dateTime_str = now_ist.strftime("%Y-%m-%d %H:%M:%S")
             date_str = now_ist.date()
             time_str = now_ist.time().strftime("%H:%M:%S")
@@ -77,23 +84,27 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                     if response.status_code == 200:
                         root = ET.fromstring(response.content)
                         variable_elements = root.findall(".//variable")
-                
+                        data_records=[]
                         for variable_element in variable_elements:
                             d_name = variable_element.find("id").text
                             d_value = float(variable_element.find("value").text)
 
-                            eds_data = EDSdata(
+                            data_records.append(EDSdata(
                                 d_name=d_name, 
                                 d_value=d_value, 
                                 date_time=dateTime_str, 
                                 date=date_str, 
                                 time=time_str
-                            )
-                            logging.info(f"Fetched Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
+                            ))
+                            #logging.info(f"Fetched Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
 
-                            db.add(eds_data)
-                            db.commit()
-                            logging.info("Data stored successfully.")
+                            try:
+                                db.bulk_save_objects(data_records)
+                                db.commit()
+                                logging.info("CAS Data stored successfully. Total recodrds: {len(data_rec)}")
+                            except Exception as db_error:
+                                db.rollback()
+                                logging.error(f"Error storing data in database: {db_error}")
                     else:
                         logging.error(f"Failed to fetch XML data from {url}. Status code: {response.status_code}")
                 except Exception as e:
@@ -103,5 +114,55 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
         finally:
             db.close()
 
+    def fetchAndStore_TechXmlData(self):
+        db = SessionLocal()
+        try:
+            with open(tech_url_file, 'r') as file:
+                urls = [line.strip() for line in file if line.strip()]
+                logging.info(f"Extracted Tech URLs: {urls}")
+
+            now_ist = datetime.now(pytz.timezone("Asia/Kolkata"))
+            dateTime_str = now_ist.strftime("%Y-%m-%d %H:%M:%S")
+            date_str = now_ist.date()
+            time_str = now_ist.time().strftime("%H:%M:%S")
+        
+            logging.info(f"Timestamp for Tech fetch cycle: {dateTime_str}")
+
+            for url in urls:
+                try:
+                    logging.info(f"Fetching data from {url}")
+                    response = requests.get(url)
+                    if response.status_code == 200:
+                        root = ET.fromstring(response.content)
+                        variable_elements = root.findall(".//variable")
+                        data_records = []
+                        for variable_element in variable_elements:
+                            d_name = variable_element.find("id").text
+                            d_value = float(variable_element.find("value").text)
+
+                            data_records.append(TechEdsData(
+                                d_name=d_name, 
+                                d_value=d_value, 
+                                date_time=dateTime_str, 
+                                date=date_str, 
+                                time=time_str
+                            ))
+                            #logging.info(f"Fetched Tech Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
+
+                            try:
+                                db.bulk_save_objects(data_records)
+                                db.commit()
+                                logging.info("Tech Data stored successfully. Total records: {len(data_records)}")
+                            except Exception as db_error:
+                                db.rollback()
+                                logging.error(f"Error storing data in database: {db_error}")
+                    else:
+                        logging.error(f"Failed to fetch Tech XML data from {url}. Status code: {response.status_code}")
+                except Exception as e:
+                    logging.error(f"Error fetching Tech data from {url}: {e}")
+        except Exception as e:
+            logging.error(f"Error reading Tech URLs or processing Tech data: {e}")
+        finally:
+            db.close()
 if __name__ == "__main__":
     win32serviceutil.HandleCommandLine(EdsToSqlService)
