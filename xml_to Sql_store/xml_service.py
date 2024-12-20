@@ -84,22 +84,21 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                     if response.status_code == 200:
                         root = ET.fromstring(response.content)
                         variable_elements = root.findall(".//variable")
-                        data_records=[]
                         for variable_element in variable_elements:
                             d_name = variable_element.find("id").text
                             d_value = float(variable_element.find("value").text)
 
-                            data_records.append(EDSdata(
+                            data_record = EDSdata(
                                 d_name=d_name, 
                                 d_value=d_value, 
                                 date_time=dateTime_str, 
                                 date=date_str, 
                                 time=time_str
-                            ))
+                            )
                             #logging.info(f"Fetched Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
 
                             try:
-                                db.bulk_save_objects(data_records)
+                                db.add(data_record)
                                 db.commit()
                                 logging.info("CAS Data stored successfully. Total recodrds: {len(data_rec)}")
                             except Exception as db_error:
@@ -140,17 +139,17 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                             d_name = variable_element.find("id").text
                             d_value = float(variable_element.find("value").text)
 
-                            data_records.append(TechEdsData(
+                            data_record=TechEdsData(
                                 d_name=d_name, 
                                 d_value=d_value, 
                                 date_time=dateTime_str, 
                                 date=date_str, 
                                 time=time_str
-                            ))
+                            )
                             #logging.info(f"Fetched Tech Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
 
                             try:
-                                db.bulk_save_objects(data_records)
+                                db.add(data_record)
                                 db.commit()
                                 logging.info("Tech Data stored successfully. Total records: {len(data_records)}")
                             except Exception as db_error:
