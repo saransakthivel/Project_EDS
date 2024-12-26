@@ -25,3 +25,13 @@ class TechEdsData(Base):
     date_time = Column(DateTime)
     date = Column(Date)
     time = Column(Time)
+
+class CTHEdsData(Base):
+    __tablename__ = 'CTHData'
+
+    id = Column(UNIQUEIDENTIFIER, primary_key=True, default=uuid.uuid4)
+    d_name = Column(String)
+    d_value = Column(Float)
+    date_time = Column(DateTime)
+    date = Column(Date)
+    time = Column(Time)
