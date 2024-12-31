@@ -23,7 +23,8 @@ script_dir=os.path.abspath(os.path.dirname(__file__))
 url_file = os.path.join(script_dir, "urls.txt")
 tech_url_file = os.path.join(script_dir, "tech_urls.txt")
 it_url_file = os.path.join(script_dir, "it_urls.txt")
-fetch_interval = 10  # seconds
+cth_url_file = os.path.join(script_dir, "cth_urls.txt")
+fetch_interval = 290  # seconds
 
 logging.basicConfig(
     filename="service_debug.log",
@@ -57,7 +58,7 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
             
             self.scheduler.add_job(self.fetchAndStore_TechXmlData, 'interval', seconds=fetch_interval, max_instances=1)
             logging.info("Job scheduled: fetchAndStore_TechXmlData every %s seconds", fetch_interval)
-            
+
             self.scheduler.add_job(self.fetchAndStore_CTHXmlData, 'interval', seconds=fetch_interval, max_instances=1)
             logging.info("Job scheduled: fetchAndStore_CTHXmlData every %s seconds", fetch_interval)
 
@@ -174,7 +175,7 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
     def fetchAndStore_CTHXmlData(self):
         db = SessionLocal()
         try:
-            with open(tech_url_file, 'r') as file:
+            with open(cth_url_file, 'r') as file:
                 urls = [line.strip() for line in file if line.strip()]
                 logging.info(f"Extracted Tech URLs: {urls}")
 
