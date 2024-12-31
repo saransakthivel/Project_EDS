@@ -1,0 +1,12 @@
+
+http://127.0.0.1:8082/services/user/values.xml?var=Y%20SOLAR%20NEW.API
+http://127.0.0.1:8087/services/user/values.xml?var=F-04%20Y%20Block%20AC.API
+http://127.0.0.1:8087/services/user/values.xml?var=F-06%20EB%20Block.API
+http://127.0.0.1:8087/services/user/values.xml?var=F-08%20E%20Block%20Emer%20RM.API
+http://127.0.0.1:8087/services/user/values.xml?var=F-12%20J%20Block.API
+http://127.0.0.1:8087/services/user/values.xml?var=LT%20EB%20Incomer.AI1
+http://127.0.0.1:8087/services/user/values.xml?var=LT%20EB%20Incomer.AI2
+http://127.0.0.1:8087/services/user/values.xml?var=LT%20EB%20Incomer.AI3
+http://127.0.0.1:8087/services/user/values.xml?var=LT%20EB%20Incomer.VI12
+http://127.0.0.1:8087/services/user/values.xml?var=LT%20EB%20Incomer.VI23
+http://127.0.0.1:8087/services/user/values.xml?var=LT%20EB%20Incomer.VI31

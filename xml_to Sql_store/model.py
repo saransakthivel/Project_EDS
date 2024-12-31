@@ -35,3 +35,13 @@ class CTHEdsData(Base):
     date_time = Column(DateTime)
     date = Column(Date)
     time = Column(Time)
+
+class ITEdsData(Base):
+    __tablename__ = 'ITData'
+
+    id = Column(UNIQUEIDENTIFIER, primary_key=True, default=uuid.uuid4)
+    d_name = Column(String)
+    d_value = Column(Float)
+    date_time = Column(DateTime)
+    date = Column(Date)
+    time = Column(Time)
