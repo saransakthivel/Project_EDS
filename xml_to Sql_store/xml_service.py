@@ -37,9 +37,7 @@ fetch_interval = 10  # seconds
 
 logging.basicConfig(level=logging.INFO)
 
-log_directory = "C:\\Users\\admin\\OneDrive - E 4 Energy Solutions\\Saturn Pyro Files\\Documents\\Project EDS\\xml_to Sql_store\\logs"
-
-# log_directory = "C:\\xml_to Sql_store\\logs"
+log_directory = "C:\\xml_to Sql_store\\logs"
 log_file = os.path.join(log_directory, "service_debug.log")
 
 os.makedirs(log_directory, exist_ok=True)
@@ -118,6 +116,7 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                     if response.status_code == 200:
                         root = ET.fromstring(response.content)
                         variable_elements = root.findall(".//variable")
+                        data_records=[]
                         for variable_element in variable_elements:
                             d_name = variable_element.find("id").text
                             d_value = float(variable_element.find("value").text)
@@ -132,9 +131,10 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                             #logging.info(f"Fetched Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
 
                             try:
+                                data_records.append(data_record)
                                 db.add(data_record)
                                 db.commit()
-                                logging.info("CAS Data stored successfully. Total recodrds: {len(data_rec)}")
+                                logging.info(f"CAS Data stored successfully. Total records: {len(data_records)}")
                             except Exception as db_error:
                                 db.rollback()
                                 logging.error(f"Error storing data in database: {db_error}")
@@ -183,9 +183,10 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                             #logging.info(f"Fetched Tech Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
 
                             try:
+                                data_records.append(data_record)
                                 db.add(data_record)
                                 db.commit()
-                                logging.info("Tech Data stored successfully. Total records: {len(data_records)}")
+                                logging.info(f"Tech Data stored successfully. Total records: {len(data_records)}")
                             except Exception as db_error:
                                 db.rollback()
                                 logging.error(f"Error storing data in database: {db_error}")
@@ -234,9 +235,10 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                             #logging.info(f"Fetched Tech Hostel Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
 
                             try:
+                                data_records.append(data_record)
                                 db.add(data_record)
                                 db.commit()
-                                logging.info("Tech Hostel Data stored successfully. Total records: {len(data_records)}")
+                                logging.info(f"Tech Hostel Data stored successfully. Total records: {len(data_records)}")
                             except Exception as db_error:
                                 db.rollback()
                                 logging.error(f"Error storing data in database: {db_error}")
@@ -285,9 +287,10 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
                             #logging.info(f"Fetched Tech Hostel Data - ID: {d_name}, Value: {d_value}, DateTime: {dateTime_str}")
 
                             try:
+                                data_records.append(data_record)
                                 db.add(data_record)
                                 db.commit()
-                                logging.info("Tech Hostel Data stored successfully. Total records: {len(data_records)}")
+                                logging.info(f"Tech Hostel Data stored successfully. Total records: {len(data_records)}")
                             except Exception as db_error:
                                 db.rollback()
                                 logging.error(f"Error storing data in database: {db_error}")
@@ -314,7 +317,7 @@ def delete_old_data():
         db.query(ITEdsData).filter(ITEdsData.date_time < formatted_timestamp).delete(synchronize_session=False)
 
         db.commit()
-        logging.info(f"Old data older than {formatted_timestamp} fas been deleted successfully.")
+        logging.info(f"Old data older than {formatted_timestamp} has been deleted successfully.")
     except Exception as e:
         db.rollback()
         logging.error(f"Error while deleting old data: {e}")
