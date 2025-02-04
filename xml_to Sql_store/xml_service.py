@@ -1,6 +1,7 @@
 import os
 import pytz
 import logging
+from logging.handlers import RotatingFileHandler
 import time
 import requests
 import win32serviceutil
@@ -8,6 +9,7 @@ import win32service
 import win32event
 import servicemanager
 from sqlalchemy import create_engine
+from datetime import timedelta
 from sqlalchemy.orm import sessionmaker, declarative_base
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -23,14 +25,35 @@ script_dir=os.path.abspath(os.path.dirname(__file__))
 url_file = os.path.join(script_dir, "urls.txt")
 tech_url_file = os.path.join(script_dir, "tech_urls.txt")
 it_url_file = os.path.join(script_dir, "it_urls.txt")
-cth_url_file = os.path.join(script_dir, "cth_urls.txt")
-fetch_interval = 290  # seconds
+fetch_interval = 10  # seconds
 
-logging.basicConfig(
-    filename="service_debug.log",
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(message)s"
+# logging.basicConfig(
+#     filename="C:\\xml_to Sql_store\\service_debug.log",
+#     level=logging.DEBUG,
+#     format="%(asctime)s - %(levelname)s - %(message)s",
+#     encoding="utf-8",
+#     force=True
+# )
+
+logging.basicConfig(level=logging.INFO)
+
+log_directory = "C:\\Users\\admin\\OneDrive - E 4 Energy Solutions\\Saturn Pyro Files\\Documents\\Project EDS\\xml_to Sql_store\\logs"
+
+# log_directory = "C:\\xml_to Sql_store\\logs"
+log_file = os.path.join(log_directory, "service_debug.log")
+
+os.makedirs(log_directory, exist_ok=True)
+
+log_handler = RotatingFileHandler(
+    log_file, maxBytes=1 * 1024 * 2024, backupCount=5, encoding="utf-8"
 )
+log_handler.setLevel(logging.INFO)
+log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+log_handler.setFormatter(log_formatter)
+
+logging.getLogger().addHandler(log_handler)
+
+logging.info("program started.")
 
 class EdsToSqlService(win32serviceutil.ServiceFramework):
     _svc_name_ = "EDSDataFetchService"
@@ -58,12 +81,15 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
             
             self.scheduler.add_job(self.fetchAndStore_TechXmlData, 'interval', seconds=fetch_interval, max_instances=1)
             logging.info("Job scheduled: fetchAndStore_TechXmlData every %s seconds", fetch_interval)
-
+            
             self.scheduler.add_job(self.fetchAndStore_CTHXmlData, 'interval', seconds=fetch_interval, max_instances=1)
             logging.info("Job scheduled: fetchAndStore_CTHXmlData every %s seconds", fetch_interval)
 
             self.scheduler.add_job(self.fetchAndStore_ITXmlData, 'interval', seconds=fetch_interval, max_instances=1)
             logging.info("Job scheduled: fetchAndStore_CTHXmlData every %s seconds", fetch_interval)
+
+            self.scheduler.add_job(delete_old_data, 'interval', minutes=5, max_instances=1)
+            logging.info("job scheduled: delete_old_data every 5 minutes")
 
             self.scheduler.start()
             logging.info("Scheduler started successfully.")
@@ -175,7 +201,7 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
     def fetchAndStore_CTHXmlData(self):
         db = SessionLocal()
         try:
-            with open(cth_url_file, 'r') as file:
+            with open(tech_url_file, 'r') as file:
                 urls = [line.strip() for line in file if line.strip()]
                 logging.info(f"Extracted Tech URLs: {urls}")
 
@@ -273,5 +299,27 @@ class EdsToSqlService(win32serviceutil.ServiceFramework):
             logging.error(f"Error reading Tech URLs or processing Tech data: {e}")
         finally:
             db.close()
+
+def delete_old_data():
+    db=SessionLocal()
+    try:
+        now_ist = datetime.now(pytz.timezone("Asia/Kolkata"))
+        Timestamp_pastminute_ago = now_ist - timedelta(minutes=1)
+
+        formatted_timestamp = Timestamp_pastminute_ago.strftime("%Y-%m-%d %H:%M:%S")
+
+        db.query(EDSdata).filter(EDSdata.date_time < formatted_timestamp).delete(synchronize_session=False)
+        db.query(TechEdsData).filter(TechEdsData.date_time < formatted_timestamp).delete(synchronize_session=False)
+        db.query(CTHEdsData).filter(CTHEdsData.date_time < formatted_timestamp).delete(synchronize_session=False)
+        db.query(ITEdsData).filter(ITEdsData.date_time < formatted_timestamp).delete(synchronize_session=False)
+
+        db.commit()
+        logging.info(f"Old data older than {formatted_timestamp} fas been deleted successfully.")
+    except Exception as e:
+        db.rollback()
+        logging.error(f"Error while deleting old data: {e}")
+    finally:
+        db.close()
+
 if __name__ == "__main__":
     win32serviceutil.HandleCommandLine(EdsToSqlService)

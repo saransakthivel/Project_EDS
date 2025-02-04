@@ -6,7 +6,7 @@ import uuid
 
 Base = declarative_base()
 
-class EDSdata(Base):
+class EDSdata(Base):  #PSG CAS EdsData
     __tablename__ = 'CasData'  # Table name
 
     id = Column(UNIQUEIDENTIFIER, primary_key=True, default=uuid.uuid4)
