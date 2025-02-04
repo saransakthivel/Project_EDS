@@ -45,7 +45,7 @@ log_file = os.path.join(log_directory, "service_debug.log")
 os.makedirs(log_directory, exist_ok=True)
 
 log_handler = RotatingFileHandler(
-    log_file, maxBytes=1 * 1024 * 2024, backupCount=5, encoding="utf-8"
+    log_file, maxBytes=1 * 1024 * 1024, backupCount=5, encoding="utf-8"
 )
 log_handler.setLevel(logging.INFO)
 log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
