@@ -3,7 +3,7 @@ from .database import Base
 from sqlalchemy.dialects.mssql import UNIQUEIDENTIFIER
 
 class EDSdata(Base):
-    __tablename__ = "EDSdata"
+    __tablename__ = "CasData"
 
     id = Column(UNIQUEIDENTIFIER, primary_key=True, index=True)
     d_name = Column(String(100), index=True)

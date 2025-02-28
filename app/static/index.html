@@ -18,6 +18,10 @@
                 </tr>
             </thead>
             <tbody id="data-table">
+                <td id="data-id">N/A</td>
+                <td id="data-name">N/A</td>
+                <td id="data-value">N/A</td>
+                <td id="data-time">N/A</td>
             </tbody>
         </table>
 
@@ -36,23 +40,31 @@
                         throw new Error(`HTTP error! status: ${response.status}`)
                     }
                     const data = await response.json();
-
                     const tableBody = document.getElementById("data-table");
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td>${data.id || "N/A"}</td>
-                            <td>${data.d_name || "N/A"}</td>
-                            <td>${data.d_value || "N/A"}</td>
-                            <td>${formatDate(data.date_time) || "N/A"}</td>
-                        </tr>
-                    `;
+
+                    // tableBody.innerHTML = `
+                    //     <tr>
+                    //         <td>${data.id || "N/A"}</td>
+                    //         <td>${data.d_name || "N/A"}</td>
+                    //         <td>${data.d_value || "N/A"}</td>
+                    //         <td>${formatDate(data.date_time) || "N/A"}</td>
+                    //     </tr>
+                    // `;
+
+                    document.getElementById("data-id").textContent = data.id || "N/A";
+                    document.getElementById("data-name").textContent = data.d_name || "N/A";
+                    document.getElementById("data-value").textContent = data.d_value || "N/A";
+                    document.getElementById("data-time").textContent = formatDate(data.date_time);
+
                 } catch(error){
                     console.error("Error fetching latest data:",error);
-                   
-                    document.body.insertAdjacentHTML(
+                    const ExistingError = document.getElementById("err-msg");
+                    if(!ExistingError){
+                        document.body.insertAdjacentHTML(
                         "beforeend",
-                        "<p style'color:red;'>Failed to fetch device data. Please try again later.</p>"
-                    );
+                        "<p id='err-msg' style'color:red;'>Failed to fetch device data. Please try again later.</p>"
+                        );
+                    }
                 }
                
             } 
